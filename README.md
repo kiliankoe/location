@@ -8,14 +8,16 @@ OVERVIEW: Output your current location
 USAGE: location
 
 OPTIONS:
+  --address, -a
+              Lookup reverse geocoded address
   --follow, -f
-             Keep polling for new location information.
-  --help     Display available options
+              Keep polling for new location updates
+  --help      Display available options
 ```
 
 ```
 $ location
-{"longitude":37.3320045,"latitude":-122.0329752}
+{"longitude":37.3320045,"latitude":-122.0329752,"altitude":151,"h_accuracy":65,"v_accuracy":10}
 ```
 
 
