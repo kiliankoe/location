@@ -17,3 +17,14 @@ OPTIONS:
 $ location
 {"longitude":37.3320045,"latitude":-122.0329752}
 ```
+
+
+
+## Installation
+
+Make sure Xcode 9+ is installed first.
+
+```
+$ brew tap kiliankoe/location https://github.com/kiliankoe/location.git
+$ brew install Location
+```
