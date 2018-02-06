@@ -1,9 +1,10 @@
 import CoreLocation
+import Contacts
 
 func print<T: Encodable>(json value: T) {
     do {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .secondsSince1970
         let data = try encoder.encode(value)
         let str = String(data: data, encoding: .utf8)!
         print(str)
@@ -14,10 +15,13 @@ func print<T: Encodable>(json value: T) {
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
+    let geocoder = CLGeocoder()
     let follow: Bool
+    let address: Bool
 
-    init(follow: Bool) {
+    init(follow: Bool, address: Bool) {
         self.follow = follow
+        self.address = address
     }
 
     func start() {
@@ -28,21 +32,40 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
+        guard let cllocation = locations.first else { return }
 
-        print(json: location.coordinate)
+        var location = Location(cllocation)
 
-        if !follow {
-            exit(0)
+        if self.address {
+            if #available(OSX 10.13, *) {
+                self.geocoder.reverseGeocodeLocation(cllocation) { placemarks, _ in
+                    if let postalAddress = placemarks?.first?.postalAddress {
+                        let address = CNPostalAddressFormatter.string(from: postalAddress, style: .mailingAddress)
+                        location.address = address
+                    } else {
+                        location.address = "n/a"
+                    }
+                    print(json: location)
+
+                    if !self.follow {
+                        exit(0)
+                    }
+                }
+            } else {
+                print(json: EncError("Address can only be included on macOS >= 10.13"))
+                exit(1)
+            }
+        } else {
+            print(json: location)
+
+            if !follow {
+                exit(0)
+            }
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .authorizedAlways:
-            break
-        case .notDetermined:
-            break
         case .denied:
             print(json: EncError("Location access denied"))
             exit(1)
