@@ -13,4 +13,8 @@ class Location < Formula
         system("swift build --disable-sandbox -c release --static-swift-stdlib")
         bin.install build_path
     end
+
+    bottle do
+        sha256 "4468528b4709c74f73665d8d68d3c5f3aed1e1e72e15f784254d8cd8be29f42a" => :high_sierra
+    end
 end
