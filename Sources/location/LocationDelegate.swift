@@ -2,7 +2,7 @@ import CoreLocation
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
-    var follow: Bool
+    let follow: Bool
 
     init(follow: Bool) {
         self.follow = follow
