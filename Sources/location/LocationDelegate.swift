@@ -1,5 +1,17 @@
 import CoreLocation
 
+func print<T: Encodable>(json value: T) {
+    do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(value)
+        let str = String(data: data, encoding: .utf8)!
+        print(str)
+    } catch {
+        exit(1)
+    }
+}
+
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     let follow: Bool
@@ -18,19 +30,10 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
 
-        do {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            let json = try JSONEncoder().encode(location.coordinate)
-            let str = String(data: json, encoding: .utf8)!
-            print(str)
+        print(json: location.coordinate)
 
-            if !follow {
-                exit(0)
-            }
-        } catch let error {
-            print(error.localizedDescription)
-            exit(1)
+        if !follow {
+            exit(0)
         }
     }
 
@@ -41,10 +44,10 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         case .notDetermined:
             break
         case .denied:
-            print("Location Access Denied.")
+            print(json: EncError("Location access denied"))
             exit(1)
         case .restricted:
-            print("Location Access Restricted.")
+            print(json: EncError("Location access restricted"))
             exit(1)
         case _:
             break
@@ -52,7 +55,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
+        print(json: EncError(error.localizedDescription))
         exit(1)
     }
 }
