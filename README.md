@@ -17,7 +17,7 @@ OPTIONS:
 
 ```
 $ location
-{"longitude":37.3320045,"latitude":-122.0329752,"altitude":151,"h_accuracy":65,"v_accuracy":10}
+{"longitude":37.3320045,"latitude":-122.0329752,"altitude":151,"h_accuracy":65,"v_accuracy":10,"timestamp":1517954509.9017959}
 ```
 
 
