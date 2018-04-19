@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "location",
     dependencies: [
-        .package(url: "https://github.com/apple/swift-package-manager", .branch("master")),
+        .package(url: "https://github.com/apple/swift-package-manager", .revision("4d0bab2")),
     ],
     targets: [
         .target(
