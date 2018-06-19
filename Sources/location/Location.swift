@@ -12,6 +12,8 @@ struct Location: Encodable {
         case latitude
         case longitude
         case altitude
+        case speed
+        case course
         case horizontalAccuracy = "h_accuracy"
         case verticalAccuracy = "v_accuracy"
         case timestamp
@@ -23,6 +25,8 @@ struct Location: Encodable {
         try encoder.encode(self.location.coordinate.latitude, forKey: .latitude)
         try encoder.encode(self.location.coordinate.longitude, forKey: .longitude)
         try encoder.encode(self.location.altitude, forKey: .altitude)
+        try encoder.encode(self.location.speed, forKey: .speed)
+        try encoder.encode(self.location.course, forKey: .course)
         try encoder.encode(self.location.horizontalAccuracy, forKey: .horizontalAccuracy)
         try encoder.encode(self.location.verticalAccuracy, forKey: .verticalAccuracy)
         try encoder.encode(self.location.timestamp, forKey: .timestamp)
