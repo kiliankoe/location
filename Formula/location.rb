@@ -1,8 +1,8 @@
 class Location < Formula
     desc "cli to get your device's physical location and output it as json."
     homepage "https://github.com/kiliankoe/location"
-    url "https://github.com/kiliankoe/location/archive/0.2.1.tar.gz"
-    sha256 "562eb522f133a578630a359c0f2f83ed51e243c7a090f96cea7e3db7961f100a"
+    url "https://github.com/kiliankoe/location/archive/0.3.0.tar.gz"
+    sha256 "86837503898d470a4e47b65116c4400e77f44dac58413cdcf352edea9df12810"
     head "https://github.com/kiliankoe/location.git"
 
     depends_on :xcode
