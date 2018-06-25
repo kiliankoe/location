@@ -1,7 +1,7 @@
 import Foundation
 import Utility
 
-let argParser = ArgumentParser(commandName: "location", usage: "", overview: "Output your current location")
+let argParser = ArgumentParser(commandName: "whereami", usage: "", overview: "Output your current location")
 let follow = argParser.add(option: "--follow", shortName: "-f", kind: Bool.self, usage: "Keep polling for new location updates")
 let address = argParser.add(option: "--address", shortName: "-a", kind: Bool.self, usage: "Lookup reverse geocoded address")
 
